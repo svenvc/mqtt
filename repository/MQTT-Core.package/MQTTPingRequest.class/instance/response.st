@@ -1,0 +1,3 @@
+accessing
+response
+	^ MQTTPingResponse new

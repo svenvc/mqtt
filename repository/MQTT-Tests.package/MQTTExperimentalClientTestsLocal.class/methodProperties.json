@@ -1,0 +1,9 @@
+{
+	"class" : {
+		"isAbstract" : "SvenVanCaekenberghe 12/22/2016 16:44" },
+	"instance" : {
+		"host" : "SvenVanCaekenberghe 12/22/2016 16:45",
+		"producerClientId" : "SvenVanCaekenberghe 12/22/2016 19:49",
+		"testTwoPartiesBatchQoS0" : "SvenVanCaekenberghe 12/22/2016 19:52",
+		"testTwoPartiesBatchQoS1" : "SvenVanCaekenberghe 12/22/2016 19:51",
+		"testTwoPartiesBatchQoS2" : "SvenVanCaekenberghe 12/22/2016 19:51" } }

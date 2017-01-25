@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"=" : "SvenVanCaekenberghe 12/5/2016 14:29",
+		"hasId" : "SvenVanCaekenberghe 12/4/2016 23:32",
+		"hash" : "SvenVanCaekenberghe 12/5/2016 14:29",
+		"id" : "SvenVanCaekenberghe 12/4/2016 00:08",
+		"id:" : "SvenVanCaekenberghe 12/5/2016 14:28",
+		"isIdRequired" : "SvenVanCaekenberghe 12/5/2016 09:54",
+		"printInfoOn:" : "SvenVanCaekenberghe 12/6/2016 13:27",
+		"printOn:" : "SvenVanCaekenberghe 12/6/2016 10:29",
+		"readFrom:" : "SvenVanCaekenberghe 12/5/2016 16:22",
+		"readVariableHeaderFrom:" : "SvenVanCaekenberghe 12/5/2016 16:22",
+		"variableHeaderLength" : "SvenVanCaekenberghe 12/5/2016 09:56",
+		"writeOn:" : "SvenVanCaekenberghe 12/5/2016 10:00",
+		"writeVariableHeaderOn:" : "SvenVanCaekenberghe 12/5/2016 10:00" } }

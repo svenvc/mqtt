@@ -1,0 +1,14 @@
+{
+	"class" : {
+		"isAbstract" : "SvenVanCaekenberghe 12/18/2016 14:27" },
+	"instance" : {
+		"clientClass" : "SvenVanCaekenberghe 12/18/2016 14:27",
+		"host" : "SvenVanCaekenberghe 12/18/2016 14:27",
+		"message" : "SvenVanCaekenberghe 12/6/2016 16:12",
+		"setUp" : "SvenVanCaekenberghe 12/18/2016 14:23",
+		"tearDown" : "SvenVanCaekenberghe 12/6/2016 16:02",
+		"testOneQoS0" : "SvenVanCaekenberghe 12/20/2016 15:48",
+		"testOneQoS1" : "SvenVanCaekenberghe 12/20/2016 15:48",
+		"testOneQoS2" : "SvenVanCaekenberghe 12/20/2016 15:48",
+		"testPing" : "SvenVanCaekenberghe 12/6/2016 16:02",
+		"topic" : "SvenVanCaekenberghe 12/6/2016 16:11" } }

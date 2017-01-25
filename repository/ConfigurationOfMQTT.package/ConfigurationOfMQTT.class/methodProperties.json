@@ -1,0 +1,17 @@
+{
+	"class" : {
+		"DevelopmentSupport" : "JurajKubelka 1/24/2017 15:03",
+		"baseConfigurationClassIfAbsent:" : "JurajKubelka 1/24/2017 15:03",
+		"ensureMetacello" : "JurajKubelka 1/24/2017 15:03",
+		"ensureMetacelloBaseConfiguration" : "JurajKubelka 1/24/2017 15:03",
+		"isMetacelloConfig" : "JurajKubelka 1/24/2017 15:03",
+		"load" : "JurajKubelka 1/24/2017 15:03",
+		"loadBleedingEdge" : "JurajKubelka 1/24/2017 15:03",
+		"loadDevelopment" : "JurajKubelka 1/24/2017 15:03",
+		"project" : "JurajKubelka 1/24/2017 15:03",
+		"validate" : "JurajKubelka 1/24/2017 15:03" },
+	"instance" : {
+		"baseline01:" : "JurajKubelka 1/24/2017 15:08",
+		"customProjectAttributes" : "JurajKubelka 1/24/2017 15:03",
+		"development:" : "JurajKubelka 1/24/2017 15:03",
+		"project" : "JurajKubelka 1/24/2017 15:03" } }

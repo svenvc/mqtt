@@ -1,0 +1,17 @@
+{
+	"class" : {
+		"failure" : "SvenVanCaekenberghe 12/5/2016 17:10",
+		"returnCodeValues" : "SvenVanCaekenberghe 12/6/2016 11:20",
+		"returnCodes" : "SvenVanCaekenberghe 12/5/2016 15:23" },
+	"instance" : {
+		"=" : "SvenVanCaekenberghe 12/5/2016 15:04",
+		"addReturnCode:" : "SvenVanCaekenberghe 12/5/2016 15:23",
+		"hasReturnCodes" : "SvenVanCaekenberghe 12/6/2016 10:50",
+		"hash" : "SvenVanCaekenberghe 12/5/2016 15:04",
+		"isSubscription:acceptedWithQoS:" : "SvenVanCaekenberghe 12/6/2016 13:06",
+		"payloadLength" : "SvenVanCaekenberghe 12/5/2016 09:30",
+		"printInfoOn:" : "SvenVanCaekenberghe 12/6/2016 10:50",
+		"readFrom:" : "SvenVanCaekenberghe 12/5/2016 10:03",
+		"returnCodes" : "SvenVanCaekenberghe 12/5/2016 09:30",
+		"typeTag" : "SvenVanCaekenberghe 12/3/2016 19:58",
+		"writeOn:" : "SvenVanCaekenberghe 12/5/2016 10:03" } }

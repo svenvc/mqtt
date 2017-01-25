@@ -1,0 +1,24 @@
+{
+	"category" : "MQTT-Client",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/6/2016 11:21",
+	"instvars" : [
+		"clientId",
+		"host",
+		"port",
+		"username",
+		"password",
+		"timeout",
+		"keepalive",
+		"qualityOfService",
+		"connection",
+		"subscriptions",
+		"idCounter" ],
+	"name" : "MQTTAbstractClient",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

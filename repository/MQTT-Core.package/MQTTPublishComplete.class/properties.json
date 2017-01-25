@@ -1,0 +1,14 @@
+{
+	"category" : "MQTT-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/5/2016 14:54",
+	"instvars" : [
+		 ],
+	"name" : "MQTTPublishComplete",
+	"pools" : [
+		 ],
+	"super" : "MQTTIdPacket",
+	"type" : "normal" }

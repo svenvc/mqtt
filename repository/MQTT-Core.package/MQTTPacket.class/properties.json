@@ -1,0 +1,14 @@
+{
+	"category" : "MQTT-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/5/2016 15:00",
+	"instvars" : [
+		 ],
+	"name" : "MQTTPacket",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

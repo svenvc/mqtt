@@ -1,0 +1,3 @@
+accessing
+topics
+	^ self topicFilters 

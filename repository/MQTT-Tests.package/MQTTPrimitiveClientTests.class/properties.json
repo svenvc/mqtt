@@ -1,0 +1,14 @@
+{
+	"category" : "MQTT-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/18/2016 14:41",
+	"instvars" : [
+		 ],
+	"name" : "MQTTPrimitiveClientTests",
+	"pools" : [
+		 ],
+	"super" : "MQTTClientTests",
+	"type" : "normal" }

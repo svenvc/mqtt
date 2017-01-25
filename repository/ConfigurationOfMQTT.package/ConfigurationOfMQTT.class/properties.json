@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfMQTT",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfMQTT",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
