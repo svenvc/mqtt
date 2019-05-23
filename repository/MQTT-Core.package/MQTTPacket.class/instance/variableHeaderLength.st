@@ -1,3 +1,0 @@
-accessing
-variableHeaderLength
-	^ 0

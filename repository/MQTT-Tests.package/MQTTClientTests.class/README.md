@@ -1,1 +1,0 @@
-Superclass of client tests

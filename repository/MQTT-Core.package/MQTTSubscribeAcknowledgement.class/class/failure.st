@@ -1,3 +1,0 @@
-accessing
-failure
-	^ 128

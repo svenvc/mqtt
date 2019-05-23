@@ -1,3 +1,0 @@
-accessing
-flagBits
-	^ 0

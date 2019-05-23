@@ -1,1 +1,0 @@
-Superclass of MQTTPrimitiveClient tests

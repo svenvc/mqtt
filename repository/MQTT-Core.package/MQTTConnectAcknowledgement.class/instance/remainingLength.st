@@ -1,3 +1,0 @@
-accessing
-remainingLength
-	^ 2

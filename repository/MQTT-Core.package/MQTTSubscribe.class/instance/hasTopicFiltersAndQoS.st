@@ -1,3 +1,0 @@
-testing
-hasTopicFiltersAndQoS
-	^ topicFiltersAndRequestedQoS isEmptyOrNil not
