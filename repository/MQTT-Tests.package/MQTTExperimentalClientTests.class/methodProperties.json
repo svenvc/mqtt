@@ -1,9 +1,0 @@
-{
-	"class" : {
-		"isAbstract" : "SvenVanCaekenberghe 12/18/2016 14:57" },
-	"instance" : {
-		"clientClass" : "SvenVanCaekenberghe 12/18/2016 14:57",
-		"systemTopic" : "SvenVanCaekenberghe 12/20/2016 15:23",
-		"testOneQoS0Busy" : "SvenVanCaekenberghe 12/20/2016 15:27",
-		"testOneQoS1Busy" : "SvenVanCaekenberghe 12/20/2016 15:30",
-		"testOneQoS2Busy" : "SvenVanCaekenberghe 12/20/2016 15:30" } }
