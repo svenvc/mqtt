@@ -8,17 +8,17 @@ Many client libraries for different programming languages and multiple brokers/s
 
 A good client library for Pharo was not yet available. I started a new MQTT project and I am looking for collaborators to help me finish it. The official specification is quite readable and there is a lot of information available (see the References/Links section at the end).
 
-Right now, a first version of the following features is available:
+Right now, the following features are available:
 
  - reading & writing of all 14 binary packet types
  - an experimental client with support for connection open/close, ping, subscribe/unsubscribe, QoS levels 0 (at most once), 1 (at least once) and 2 (exactly once) for application (publish) messages in both directions, message/package IDs and keep alive (heartbeat)
- - unit tests, for packet reading/writing and for clients against 3 publicly available sandbox/test brokers
+ - unit tests, for packet reading/writing and for clients against 3 publicly available sandbox/test brokers as well as against a local server
 
 Basically, the code works but needs polishing and maturing. Also, it might be useful to experiment with alternative client API design. Not all features are yet implemented. It would also be nice to implement an actual server/broker, not to replace production quality servers, but as a proof of concept and tools during development.
 
 ## Code
 
-Right now, documentation is limited, but there are class comments and the most important public API methods are commented too. There is no Metacello configuration yet, just load the 3 packages.
+Right now, documentation is limited, but there are class comments and the most important public API methods are commented too. The unit test show usage. There is a BaselineOf and a Metacello configuration, that load the 3 packages. There are no dependencies.
 
 ## References/Links
 
