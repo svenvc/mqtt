@@ -22,6 +22,12 @@ Class {
 	#category : 'MQTT-Client'
 }
 
+{ #category : #accessing }
+MQTTAbstractClient class >> url: anUrl [
+
+	^ self new url: anUrl 
+]
+
 { #category : #'initialize-release' }
 MQTTAbstractClient >> atLeastOnce [
 	self qualityOfService: MQTTPacket atLeastOnce 
@@ -154,6 +160,36 @@ MQTTAbstractClient >> timeout [
 { #category : #'initialize-release' }
 MQTTAbstractClient >> timeout: seconds [
 	timeout := seconds
+]
+
+{ #category : #accessing }
+MQTTAbstractClient >> url [
+	"Return my connection URL"
+	
+	^ ZnUrl new
+		scheme: #mqtt;
+		host: self host;
+		port: self port;
+		username: self username;
+		password: self password;
+		addPathSegments: #(); "I do not hold a fixed topic"
+		yourself
+]
+
+{ #category : #'initialize-release' }
+MQTTAbstractClient >> url: stringOrUrl [
+	"Set my connection settings from stringOrUrl according to the format
+	mqtt(s)://[username[:password]@]host[:port]/topic 
+	For now, topic and the mqtts variant are not yet supported"
+	
+	| url |
+	url := stringOrUrl asUrl.
+	self assert: url scheme = #mqtt.
+	self
+		host: url host;
+		port: (url portIfAbsent: [ 1883 ]);
+		username: url username;
+		password: url password
 ]
 
 { #category : #accessing }
