@@ -50,4 +50,5 @@ Metacello new
 - iot.eclipse.org:1883
 - test.mosquitto.org:1883
 - broker.mqtt-dashboard.com:1883
+- localhost:1883
 
