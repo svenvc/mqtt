@@ -1,5 +1,7 @@
 # MQTT for Pharo
 
+[![Build Status](https://travis-ci.org/svenvc/mqtt.svg?branch=master)](https://travis-ci.org/svenvc/mqtt)
+
 MQTT is a light-weight publish/subscribe messaging protocol, originally created around 1998. It is now an official open industry ISO standard. It is perfect for large-scale Internet of Things applications and high performance mobile messaging.
 
 The publish/subscribe messaging pattern requires a message broker. The broker is responsible for distributing messages to interested clients based on the topic of a message. Parties communicating with each other over MQTT would all be clients in different roles, like producers and consumers, using the broker as middleware.
@@ -19,6 +21,13 @@ Basically, the code works but needs polishing and maturing. Also, it might be us
 ## Code
 
 Right now, documentation is limited, but there are class comments and the most important public API methods are commented too. The unit test show usage. There is a BaselineOf and a Metacello configuration, that load the 3 packages. There are no dependencies.
+
+```Smalltalk
+Metacello new
+  repository: 'github://svenvc/mqtt/repository';
+  baseline: 'MQTT';
+  load.
+```
 
 ## References/Links
 
