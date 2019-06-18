@@ -34,7 +34,7 @@ MQTTClientTests >> message [
 MQTTClientTests >> setUp [
 	client := self clientClass new.
 	client host: self host.
-	client open
+	[ client open ] on: ConnectionTimedOut , AssertionFailure , ConnectionClosed do: [ self skip ] 
 ]
 
 { #category : #running }

@@ -41,7 +41,7 @@ MQTTKeepaliveTests >> setUp [
 	client host: self host.
 	client timeout: self timeout.
 	client keepalive: self keepalive.
-	client open
+	[ client open ] on: ConnectionTimedOut , AssertionFailure , ConnectionClosed do: [ self skip ] 
 ]
 
 { #category : #running }

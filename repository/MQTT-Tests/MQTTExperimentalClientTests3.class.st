@@ -22,5 +22,5 @@ MQTTExperimentalClientTests3 >> setUp [
 	client := self clientClass new.
 	client host: self host.
 	client timeout: 30.
-	client open
+	[ client open ] on: ConnectionTimedOut , AssertionFailure , ConnectionClosed do: [ self skip ]
 ]
