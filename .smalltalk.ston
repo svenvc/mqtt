@@ -2,6 +2,7 @@ SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
       #baseline : 'MQTT',
+      #directory: 'repository',
       #platforms : [ #pharo ]
     }
   ]
