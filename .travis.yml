@@ -4,8 +4,8 @@ sudo: enabled
 os:
   - linux
 
+before_install:
+  - sudo apt-get install mosquitto -y
+  
 smalltalk:
   - Pharo64-7.0
-
-services:
-  - mosquitto
