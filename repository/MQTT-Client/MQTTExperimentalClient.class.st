@@ -147,14 +147,6 @@ MQTTExperimentalClient >> readMessage [
 ]
 
 { #category : #'input/output' }
-MQTTExperimentalClient >> readPacket [
-	| packet |
-	packet := super readPacket.
-	self touch.
-	^ packet
-]
-
-{ #category : #'input/output' }
 MQTTExperimentalClient >> readPacketWithQoSFlow [
 	| packet |
 	packet := self readPacket.
@@ -200,10 +192,10 @@ MQTTExperimentalClient >> runWith: block [
 	[ [ [ 
 		[ block value: self readMessage ]
 			on: ConnectionTimedOut  
-			do: [ "Ignore & continue" ] 
+			do: [ "self log: 'Connection timed out, continuing loop'" ] 
 	] repeat
 	] ensure: [ self close ]
-	] on: ConnectionClosed do: [ "Ignore" ]
+	] on: ConnectionClosed do: [ self log: 'Connection closed, ending loop' ]
 ]
 
 { #category : #public }

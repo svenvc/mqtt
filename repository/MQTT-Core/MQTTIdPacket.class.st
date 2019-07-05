@@ -51,9 +51,8 @@ MQTTIdPacket >> isIdRequired [
 
 { #category : #printing }
 MQTTIdPacket >> printInfoOn: stream [
-	stream nextPut: $#.
 	self hasId
-		ifTrue: [ stream print: self id ]
+		ifTrue: [ stream nextPut: $#; print: self id ]
 ]
 
 { #category : #printing }
