@@ -34,6 +34,7 @@ MQTTPrimitiveClient >> newConnectPacket [
 		username: self username;
 		password: self password;
 		keepalive: self keepalive;
+		cleanSession: self cleanSession;
 		yourself
 ]
 
@@ -56,7 +57,7 @@ MQTTPrimitiveClient >> open [
 	self writePacket: self newConnectPacket.
 	packet := self readPacket.
 	self assert: packet isAccepted.
-	^ true
+	^ packet
 ]
 
 { #category : #private }
@@ -160,6 +161,6 @@ MQTTPrimitiveClient >> unsubscribeFromTopic: topicFilter [
 	self writePacket: unsubscribe.
 	packet := self readPacket.
 	self assert: packet = unsubscribe response.
-	self subscriptions remove: topicFilter.
+	self subscriptions remove: topicFilter ifAbsent: [].
 	^ true
 ]

@@ -253,7 +253,7 @@ MQTTExperimentalClient >> unsubscribeFromTopic: topicFilter [
 	self writePacket: unsubscribe.
 	expectedResponse := unsubscribe response.
 	self readSuchThat: [ :packet | packet = expectedResponse ].
-	self subscriptions remove: topicFilter.
+	self subscriptions remove: topicFilter ifAbsent: [].
 	^ true
 ]
 

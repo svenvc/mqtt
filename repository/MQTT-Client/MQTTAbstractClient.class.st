@@ -15,11 +15,12 @@ Class {
 		'timeout',
 		'keepalive',
 		'qualityOfService',
+		'cleanSession',
 		'connection',
 		'subscriptions',
 		'idCounter'
 	],
-	#category : 'MQTT-Client'
+	#category : #'MQTT-Client'
 }
 
 { #category : #accessing }
@@ -39,8 +40,18 @@ MQTTAbstractClient >> atMostOnce [
 ]
 
 { #category : #accessing }
+MQTTAbstractClient >> cleanSession [
+	^ cleanSession ifNil: [ cleanSession := true ]
+]
+
+{ #category : #'initialize-release' }
+MQTTAbstractClient >> cleanSession: boolean [
+	cleanSession := boolean
+]
+
+{ #category : #accessing }
 MQTTAbstractClient >> clientId [
-	^ clientId ifNil: [ clientId := self class name asString ]
+	^ clientId ifNil: [ clientId := self class name asString , 1e6 atRandom asString. ]
 ]
 
 { #category : #'initialize-release' }
