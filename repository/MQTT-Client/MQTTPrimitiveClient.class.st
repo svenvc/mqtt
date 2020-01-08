@@ -2,9 +2,11 @@
 I am MQTTPrimitiveClient.
 I am an MQTTAbstractClient.
 
-I am an experimental / proof of concept implementation of a simple MQTT client.
+I am a straightforward implementation of a simple MQTT client.
 
-See MQTTExperimentalClient for a more robust implementation.
+I do not handle keep alive.
+
+See MQTTClient for a more robust implementation.
 
 Implementation note:
 
@@ -13,7 +15,7 @@ We assume here that responses are synchroneous: i.e. there are no intervening me
 Class {
 	#name : #MQTTPrimitiveClient,
 	#superclass : #MQTTAbstractClient,
-	#category : 'MQTT-Client'
+	#category : #'MQTT-Client'
 }
 
 { #category : #'initialize-release' }

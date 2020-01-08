@@ -4,28 +4,28 @@ Connect to localhost
 Make sure to run a local MQTT broker !
 "
 Class {
-	#name : #MQTTExperimentalClientTestsLocal,
-	#superclass : #MQTTExperimentalClientTests,
-	#category : 'MQTT-Tests'
+	#name : #MQTTClientTestsLocal,
+	#superclass : #MQTTClientTests,
+	#category : #'MQTT-Tests'
 }
 
 { #category : #testing }
-MQTTExperimentalClientTestsLocal class >> isAbstract [
+MQTTClientTestsLocal class >> isAbstract [
 	^ false
 ]
 
 { #category : #accessing }
-MQTTExperimentalClientTestsLocal >> host [
+MQTTClientTestsLocal >> host [
 	^ 'localhost'
 ]
 
 { #category : #accessing }
-MQTTExperimentalClientTestsLocal >> producerClientId [
+MQTTClientTestsLocal >> producerClientId [
 	^ self clientClass name asString, 'Producer'
 ]
 
 { #category : #testing }
-MQTTExperimentalClientTestsLocal >> testTwoPartiesBatchQoS0 [
+MQTTClientTestsLocal >> testTwoPartiesBatchQoS0 [
 	| data received |
 	data := Integer primesUpTo: 100.
 	client atMostOnce; subscribeToTopic: self topic.
@@ -46,7 +46,7 @@ MQTTExperimentalClientTestsLocal >> testTwoPartiesBatchQoS0 [
 ]
 
 { #category : #testing }
-MQTTExperimentalClientTestsLocal >> testTwoPartiesBatchQoS1 [
+MQTTClientTestsLocal >> testTwoPartiesBatchQoS1 [
 	| data received |
 	data := Integer primesUpTo: 100.
 	client atLeastOnce; subscribeToTopic: self topic.
@@ -67,7 +67,7 @@ MQTTExperimentalClientTestsLocal >> testTwoPartiesBatchQoS1 [
 ]
 
 { #category : #testing }
-MQTTExperimentalClientTestsLocal >> testTwoPartiesBatchQoS2 [
+MQTTClientTestsLocal >> testTwoPartiesBatchQoS2 [
 	| data received |
 	data := Integer primesUpTo: 100.
 	client exactlyOnce; subscribeToTopic: self topic.

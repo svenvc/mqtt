@@ -2,23 +2,23 @@
 Connect to broker.mqtt-dashboard.com
 "
 Class {
-	#name : #MQTTExperimentalClientTests3,
-	#superclass : #MQTTExperimentalClientTests,
-	#category : 'MQTT-Tests'
+	#name : #MQTTClientTests3,
+	#superclass : #MQTTClientTests,
+	#category : #'MQTT-Tests'
 }
 
 { #category : #testing }
-MQTTExperimentalClientTests3 class >> isAbstract [
+MQTTClientTests3 class >> isAbstract [
 	^ false
 ]
 
 { #category : #accessing }
-MQTTExperimentalClientTests3 >> host [
+MQTTClientTests3 >> host [
 	^ 'broker.mqtt-dashboard.com'
 ]
 
 { #category : #running }
-MQTTExperimentalClientTests3 >> setUp [
+MQTTClientTests3 >> setUp [
 	client := self clientClass new.
 	client host: self host.
 	client timeout: 30.

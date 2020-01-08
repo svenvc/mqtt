@@ -3,8 +3,8 @@ Superclass of MQTTPrimitiveClient tests
 "
 Class {
 	#name : #MQTTPrimitiveClientTests,
-	#superclass : #MQTTClientTests,
-	#category : 'MQTT-Tests'
+	#superclass : #MQTTAbstractClientTests,
+	#category : #'MQTT-Tests'
 }
 
 { #category : #testing }

@@ -1,14 +1,21 @@
 "
-I am MQTTExperimentalClient.
+I am MQTTClient.
 I am an MQTTPrimitiveClient and a MQTTAbstractClient.
 
-I am an experimental / proof of concept implementation of a simple MQTT client.
+I implement a standard MQTT client with more high level abstractions that my superclasses.
+
+Implementation note:
+
+I use an inbox when reading messages so that I can store unexpected out of band messages. 
+Reading a message requires a condition filter.
+I handle keepalive and ping.
+I implement #runWith: to program in event driven style.
 
 Examples:
 
 Send a single message to a topic to the local broker, say a temperature reading of a sensor, using QoS level 1.
 
-  MQTTExperimentalClient new
+  MQTTClient new
     atLeastOnce;
     open;
     sendMessage: 20 asByteArray toTopic: '/device/42/outside-temperature';
@@ -16,7 +23,7 @@ Send a single message to a topic to the local broker, say a temperature reading 
 
 Same message to a remote host, using the default QoS level 0.
 
-  MQTTExperimentalClient new
+  MQTTClient new
     host: 'iot.example.com';
     open;
     sendMessage: 21 asByteArray toTopic: '/device/42/outside-temperature';
@@ -24,7 +31,7 @@ Same message to a remote host, using the default QoS level 0.
 
 Read a single message, using QoS level 2 (client should be closed afterwards)
 
-  MQTTExperimentalClient new
+  MQTTClient new
     exactlyOnce;
     open;
     subscribeToTopic: '/new-user-notifications';
@@ -34,7 +41,7 @@ Read and collect 10 temperature readings
 
   Array streamContents: [ :stream | | count |
     count := 1.
-    MQTTExperimentalClient new
+    MQTTClient new
        open;
        subscribeToTopic: '/device/42/outside-temperature';
        runWith: [ :message |
@@ -45,72 +52,65 @@ Collect 100 system notifications
 
   Array streamContents: [ :stream | | count |
     count := 1.
-    MQTTExperimentalClient new
+    MQTTClient new
       host: 'iot.eclipse.org';
       open;
       subscribeToTopic: '$SYS/#';
       runWith: [ :message |
         stream nextPut: message.
         (count := count + 1) > 100 ifTrue: [ ConnectionClosed signal ] ] ].
-
-Implementation note:
-
-I use an inbox when reading messages so that I can store unexpected out of band messages. 
-Reading a message requires a condition filter.
-I handle keepalive and ping.
-I implement #runWith: to program in event driven style.
 "
 Class {
-	#name : #MQTTExperimentalClient,
+	#name : #MQTTClient,
 	#superclass : #MQTTPrimitiveClient,
 	#instVars : [
 		'inbox',
 		'lastActivity'
 	],
-	#category : 'MQTT-Client'
+	#category : #'MQTT-Client'
 }
 
 { #category : #'initialize-release' }
-MQTTExperimentalClient >> clearInbox [
+MQTTClient >> clearInbox [
 	inbox removeAll
 ]
 
 { #category : #'initialize-release' }
-MQTTExperimentalClient >> close [
+MQTTClient >> close [
 	super close.
 	self clearInbox.
 	^ true
 ]
 
 { #category : #private }
-MQTTExperimentalClient >> enforceKeepaliveTimoutRelation [
+MQTTClient >> enforceKeepaliveTimoutRelation [
 	self assert: (self keepalive isZero or: [ self timeout <= self keepalive ])
 ]
 
 { #category : #private }
-MQTTExperimentalClient >> failedToReadInTimeout [
+MQTTClient >> failedToReadInTimeout [
 	^ ConnectionTimedOut signal: 'Could not read matching packet before timeout'
 ]
 
 { #category : #'initialize-release' }
-MQTTExperimentalClient >> initialize [
+MQTTClient >> initialize [
 	super initialize.
 	inbox := OrderedCollection new
 ]
 
 { #category : #'initialize-release' }
-MQTTExperimentalClient >> keepalive: seconds [
+MQTTClient >> keepalive: seconds [
 	super keepalive: seconds.
 	self enforceKeepaliveTimoutRelation
 ]
 
 { #category : #accessing }
-MQTTExperimentalClient >> lastActivity [
+MQTTClient >> lastActivity [
 	^ lastActivity ifNil: [ self touch ]
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> ping [
+MQTTClient >> ping [
 	"Send a ping request and wait for a ping reply."
 	
 	| ping expectedResponse |
@@ -122,7 +122,7 @@ MQTTExperimentalClient >> ping [
 ]
 
 { #category : #private }
-MQTTExperimentalClient >> pingIfNeeded [
+MQTTClient >> pingIfNeeded [
 	self keepalive isZero
 		ifTrue: [ ^ self ].
 	(Time millisecondsSince: self lastActivity) / 1000 > self keepalive
@@ -130,7 +130,7 @@ MQTTExperimentalClient >> pingIfNeeded [
 ]
 
 { #category : #'input/output' }
-MQTTExperimentalClient >> readFromInboxSuchThat: block [
+MQTTClient >> readFromInboxSuchThat: block [
 	| packet |
 	packet := inbox detect: block ifNone: [ ^ nil ].
 	inbox remove: packet.
@@ -138,7 +138,7 @@ MQTTExperimentalClient >> readFromInboxSuchThat: block [
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> readMessage [
+MQTTClient >> readMessage [
 	"Read a message while handling the necessary QoS flows.
 	Only application messages with an actual payload will be returned.
 	Might fail with ConnectionTimedOut."
@@ -147,7 +147,7 @@ MQTTExperimentalClient >> readMessage [
 ]
 
 { #category : #'input/output' }
-MQTTExperimentalClient >> readPacketWithQoSFlow [
+MQTTClient >> readPacketWithQoSFlow [
 	| packet |
 	packet := self readPacket.
 	"Handle normal first phase responses (PUBACK, PINGRESP)"
@@ -163,7 +163,7 @@ MQTTExperimentalClient >> readPacketWithQoSFlow [
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> readSuchThat: block [
+MQTTClient >> readSuchThat: block [
 	"Read a message while handling the necessary QoS flows.
 	Only application messages for which block evaluates to true will be returned.
 	Might fail with ConnectionTimedOut."
@@ -183,7 +183,7 @@ MQTTExperimentalClient >> readSuchThat: block [
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> runWith: block [
+MQTTClient >> runWith: block [
 	"Enter a loop reading messages, ignoring ConnectionTimedOut.
 	Block is evaluated for each incoming message.
 	When the loop ends, the receiver is #close-ed.
@@ -199,7 +199,7 @@ MQTTExperimentalClient >> runWith: block [
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> sendMessage: bytes toTopic: topicString [
+MQTTClient >> sendMessage: bytes toTopic: topicString [
 	"Send a message consisting of bytes to topicString while handling QoS flows.
 	Might fail with ConnectionTimedOut."
 
@@ -215,7 +215,7 @@ MQTTExperimentalClient >> sendMessage: bytes toTopic: topicString [
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> subscribeToTopic: topicFilter qos: qos [
+MQTTClient >> subscribeToTopic: topicFilter qos: qos [
 	"Subscribe to topicFilter at qos.
 	The server/broker will send us messages matching topicFilter."
 
@@ -231,18 +231,18 @@ MQTTExperimentalClient >> subscribeToTopic: topicFilter qos: qos [
 ]
 
 { #category : #'initialize-release' }
-MQTTExperimentalClient >> timeout: seconds [
+MQTTClient >> timeout: seconds [
 	super timeout: seconds.
 	self enforceKeepaliveTimoutRelation
 ]
 
 { #category : #private }
-MQTTExperimentalClient >> touch [
+MQTTClient >> touch [
 	lastActivity := Time millisecondClockValue 
 ]
 
 { #category : #public }
-MQTTExperimentalClient >> unsubscribeFromTopic: topicFilter [
+MQTTClient >> unsubscribeFromTopic: topicFilter [
 	"Unsubscribe frin topicFilter.
 	The server/broker will no longer send us messages matching topicFilter."
 
@@ -258,13 +258,13 @@ MQTTExperimentalClient >> unsubscribeFromTopic: topicFilter [
 ]
 
 { #category : #'input/output' }
-MQTTExperimentalClient >> writePacket: packet [
+MQTTClient >> writePacket: packet [
 	super writePacket: packet.
 	self touch
 ]
 
 { #category : #'input/output' }
-MQTTExperimentalClient >> writePacketWithQoSFlow: packet [
+MQTTClient >> writePacketWithQoSFlow: packet [
 	self writePacket: packet.
 	"QoS=1 normal responses (PUBACK)"
 	packet response ifNotNil: [ :expectedResponse1 |
