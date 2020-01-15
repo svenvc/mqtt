@@ -18,7 +18,8 @@ Class {
 		'cleanSession',
 		'connection',
 		'subscriptions',
-		'idCounter'
+		'idCounter',
+		'useTLS'
 	],
 	#category : #'MQTT-Client'
 }
@@ -132,7 +133,7 @@ MQTTAbstractClient >> password: bytes [
 
 { #category : #accessing }
 MQTTAbstractClient >> port [
-	^ port ifNil: [ port := 1883 ]
+	^ port ifNil: [ port := self useTLS ifTrue: [ 8883 ] ifFalse: [ 1883 ] ]
 ]
 
 { #category : #accessing }
@@ -159,6 +160,11 @@ MQTTAbstractClient >> readPacket [
 ]
 
 { #category : #accessing }
+MQTTAbstractClient >> scheme [
+	^ self useTLS ifTrue: [ #mqtts ] ifFalse: [ #mqtt ]
+]
+
+{ #category : #accessing }
 MQTTAbstractClient >> subscriptions [
 	^ subscriptions ifNil: [ subscriptions := OrderedCollection new ]
 ]
@@ -178,7 +184,7 @@ MQTTAbstractClient >> url [
 	"Return my connection URL"
 	
 	^ ZnUrl new
-		scheme: #mqtt;
+		scheme: self scheme;
 		host: self host;
 		port: self port;
 		username: self username;
@@ -191,16 +197,34 @@ MQTTAbstractClient >> url [
 MQTTAbstractClient >> url: stringOrUrl [
 	"Set my connection settings from stringOrUrl according to the format
 	mqtt(s)://[username[:password]@]host[:port]/topic 
-	For now, topic and the mqtts variant are not yet supported"
+	For now, topic is not yet supported. Return my URL as interpreted."
 	
 	| url |
 	url := stringOrUrl asUrl.
-	self assert: url scheme = #mqtt.
-	self
+	self assert: (#(mqtt mqtts) includes: url scheme).
+	^ self
 		host: url host;
-		port: (url portIfAbsent: [ 1883 ]);
+		port: (url portIfAbsent: [ nil ]);
 		username: url username;
-		password: url password
+		password: url password;
+		useTLS: url scheme = #mqtts;
+		url
+]
+
+{ #category : #testing }
+MQTTAbstractClient >> useTLS [
+	"Return true if I use TLS (transport layer security) for mqtts,
+	return false if I use plain connections for mqtt (the default)"
+	
+	^ useTLS ifNil: [ useTLS := false ]
+]
+
+{ #category : #'initialize-release' }
+MQTTAbstractClient >> useTLS: boolean [
+	"Set if I use TLS (transport layer security) for mqtts (true),
+	or if I use plain connections for mqtt (false)"
+	
+	useTLS := boolean
 ]
 
 { #category : #accessing }

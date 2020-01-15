@@ -29,6 +29,13 @@ MQTTPrimitiveClient >> close [
 	^ true
 ]
 
+{ #category : #private }
+MQTTPrimitiveClient >> connectionClass [
+	^ self useTLS 
+			ifTrue: [ ZdcSecureSocketStream ] 
+			ifFalse: [ ZdcSocketStream ]
+]
+
 { #category : #accessing }
 MQTTPrimitiveClient >> newConnectPacket [
 	^ MQTTConnect new
@@ -66,10 +73,11 @@ MQTTPrimitiveClient >> open [
 MQTTPrimitiveClient >> openConnection [
 	| address |
 	address := NetNameResolver addressForName: self host timeout: self timeout.
-	connection := ZdcSocketStream
+	connection := self connectionClass
 		openConnectionToHost: address
 		port: self port
-		timeout: self timeout
+		timeout: self timeout.
+	self useTLS ifTrue:	[ connection connect ]
 ]
 
 { #category : #public }
