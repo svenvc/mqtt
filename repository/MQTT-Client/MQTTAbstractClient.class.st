@@ -19,7 +19,8 @@ Class {
 		'connection',
 		'subscriptions',
 		'idCounter',
-		'useTLS'
+		'useTLS',
+		'debug'
 	],
 	#category : #'MQTT-Client'
 }
@@ -62,7 +63,12 @@ MQTTAbstractClient >> clientId: string [
 
 { #category : #accessing }
 MQTTAbstractClient >> debug [
-	^ true
+	^ debug ifNil: [ debug := true ]
+]
+
+{ #category : #'initialize-release' }
+MQTTAbstractClient >> debug: boolean [
+	debug := boolean
 ]
 
 { #category : #'initialize-release' }
