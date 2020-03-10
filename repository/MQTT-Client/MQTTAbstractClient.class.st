@@ -26,9 +26,15 @@ Class {
 }
 
 { #category : #accessing }
-MQTTAbstractClient class >> url: anUrl [
+MQTTAbstractClient class >> url: stringOrUrl [
+	"Create an instance of me using the connection settings 
+	from stringOrUrl according to the format
+		mqtt(s)://[username[:password]@]host[:port]/topic 
+	For now, topic is not yet supported."
 
-	^ self new url: anUrl 
+	^ self new 
+		url: stringOrUrl; 
+		yourself
 ]
 
 { #category : #'initialize-release' }
