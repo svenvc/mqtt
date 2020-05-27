@@ -130,7 +130,7 @@ MQTTAbstractClient >> log: anObject [
 
 { #category : #accessing }
 MQTTAbstractClient >> nextId [
-	^ idCounter := idCounter + 1
+	^ idCounter := (idCounter + 1) \\ 16rFFFF
 ]
 
 { #category : #accessing }
