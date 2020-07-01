@@ -125,7 +125,7 @@ MQTTAbstractClient >> log: anObject [
 		out << ' [ ' << self clientId << ' ]'.
 		out << ' - '.
 		out << anObject value ].
-	self crLog: line
+	Transcript crShow: line
 ]
 
 { #category : #accessing }
