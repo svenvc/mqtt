@@ -212,8 +212,8 @@ MQTTPacket >> writeBytes: bytes on: binaryStream [
 { #category : #writing }
 MQTTPacket >> writeInt16: integer on: binaryStream [
 	binaryStream 
-		nextPut: (integer digitAt: 2); 
-		nextPut: (integer digitAt: 1)
+		nextPut: (integer byteAt: 2); 
+		nextPut: (integer byteAt: 1)
 
 ]
 
