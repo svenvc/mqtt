@@ -2,6 +2,8 @@
 I am MQTTAbstractClient.
 
 I hold data common to all clients, independent of how they work.
+
+My concrete subclass implements the actual protocol flow.
 "
 Class {
 	#name : #MQTTAbstractClient,

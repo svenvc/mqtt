@@ -1,8 +1,8 @@
 "
 I am MQTTClient.
-I am an MQTTPrimitiveClient and a MQTTAbstractClient.
+I am an MQTTAbstractClient.
 
-I implement a standard MQTT client with more high level abstractions that my superclasses.
+I implement a standard MQTT client with high level abstractions.
 
 Implementation note:
 
@@ -62,7 +62,7 @@ Collect 100 system notifications
 "
 Class {
 	#name : #MQTTClient,
-	#superclass : #MQTTPrimitiveClient,
+	#superclass : #MQTTAbstractClient,
 	#instVars : [
 		'inbox',
 		'lastActivity'
@@ -77,9 +77,21 @@ MQTTClient >> clearInbox [
 
 { #category : #'initialize-release' }
 MQTTClient >> close [
-	super close.
+	connection
+		ifNotNil: [ 
+			[ self writePacket: MQTTDisconnect new.
+			 connection close ] on: Error do: [ ].
+			connection := nil ].
+	self subscriptions removeAll.
 	self clearInbox.
 	^ true
+]
+
+{ #category : #private }
+MQTTClient >> connectionClass [
+	^ self useTLS 
+			ifTrue: [ ZdcSecureSocketStream ] 
+			ifFalse: [ ZdcSocketStream ]
 ]
 
 { #category : #private }
@@ -109,15 +121,60 @@ MQTTClient >> lastActivity [
 	^ lastActivity ifNil: [ self touch ]
 ]
 
+{ #category : #accessing }
+MQTTClient >> newConnectPacket [
+	^ MQTTConnect new
+		clientId: self clientId;
+		username: self username;
+		password: self password;
+		keepalive: self keepalive;
+		cleanSession: self cleanSession;
+		yourself
+]
+
+{ #category : #accessing }
+MQTTClient >> newPublishPacketToTopic: topicString [
+	| publish |
+	publish := MQTTPublish new.
+	publish topic: topicString.
+	publish qualityOfService: self qualityOfService.
+	publish isIdRequired ifTrue: [ publish id: self nextId ].
+	^ publish
+
+]
+
+{ #category : #'initialize-release' }
+MQTTClient >> open [
+	| packet |
+	self close.
+	self openConnection.
+	self writePacket: self newConnectPacket.
+	packet := self readPacket.
+	self assert: packet isAccepted.
+	^ packet
+]
+
+{ #category : #private }
+MQTTClient >> openConnection [
+	| address |
+	self log: [ 'Connecting to mqtt://{1}:{2}' format: { self host. self port } ].
+	address := NetNameResolver addressForName: self host timeout: self timeout.
+	connection := self connectionClass
+		openConnectionToHost: address
+		port: self port
+		timeout: self timeout.
+	self useTLS ifTrue:	[ connection connect ]
+]
+
 { #category : #public }
 MQTTClient >> ping [
 	"Send a ping request and wait for a ping reply."
 	
-	| ping expectedResponse |
+	| ping packet |
 	ping := MQTTPingRequest new.
 	self writePacket: ping.
-	expectedResponse := ping response.
-	self readSuchThat: [ :packet | packet = expectedResponse ].
+	packet := self readPacket.
+	self assert: packet = ping response.
 	^ true
 ]
 
@@ -212,6 +269,14 @@ MQTTClient >> sendMessage: bytes toTopic: topicString [
 		"QoS=2 second phase will be handled in #readSuchThat:"
 		self readSuchThat: [ :packet | packet = expectedResponse1 ] ].
 	^ true
+]
+
+{ #category : #public }
+MQTTClient >> subscribeToTopic: topicFilter [
+	"Subscribe to topicFilter at my default QoS.
+	The server/broker will send us messages matching topicFilter."
+	
+	^ self subscribeToTopic: topicFilter qos: self qualityOfService 
 ]
 
 { #category : #public }

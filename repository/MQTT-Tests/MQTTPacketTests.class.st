@@ -1,10 +1,11 @@
 "
 Units test for MQTT Packets.
+
 "
 Class {
 	#name : #MQTTPacketTests,
 	#superclass : #TestCase,
-	#category : 'MQTT-Tests'
+	#category : #'MQTT-Tests'
 }
 
 { #category : #testing }
