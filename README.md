@@ -1,6 +1,6 @@
 # MQTT for Pharo
 
-[![Build Status](https://travis-ci.org/svenvc/mqtt.svg?branch=master)](https://travis-ci.org/svenvc/mqtt)
+[![CI](https://github.com/svenvc/mqtt/actions/workflows/CI.yml/badge.svg)](https://github.com/svenvc/mqtt/actions/workflows/CI.yml)
 
 ## MQTT
 
