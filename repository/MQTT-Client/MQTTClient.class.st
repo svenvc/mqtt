@@ -170,11 +170,10 @@ MQTTClient >> openConnection [
 MQTTClient >> ping [
 	"Send a ping request and wait for a ping reply."
 	
-	| ping packet |
+	| ping  |
 	ping := MQTTPingRequest new.
 	self writePacket: ping.
-	packet := self readPacket.
-	self assert: packet = ping response.
+	self readNoPingSuchThat: [ :packet | packet = ping response ].
 	^ true
 ]
 
@@ -203,6 +202,25 @@ MQTTClient >> readMessage [
 	^ self readSuchThat: [ :packet | packet isApplicationMessage ]
 ]
 
+{ #category : #public }
+MQTTClient >> readNoPingSuchThat: block [
+	"Read a message while handling the necessary QoS flows.
+	Only messages for which block evaluates to true will be returned.
+	Might fail with ConnectionTimedOut."
+
+	| packet started |
+	started := Time millisecondClockValue.
+	[
+		(self readFromInboxSuchThat: block) 
+			ifNotNil: [ :found | ^ found ].
+		packet := self readPacketWithQoSFlow.
+		(block value: packet)
+			ifTrue: [ ^ packet ]
+			ifFalse: [ inbox add: packet ].
+		(Time millisecondsSince: started) / 1000 > self timeout
+			ifTrue: [ ^ self failedToReadInTimeout ] ] repeat
+]
+
 { #category : #'input/output' }
 MQTTClient >> readPacketWithQoSFlow [
 	| packet |
@@ -222,21 +240,12 @@ MQTTClient >> readPacketWithQoSFlow [
 { #category : #public }
 MQTTClient >> readSuchThat: block [
 	"Read a message while handling the necessary QoS flows.
-	Only application messages for which block evaluates to true will be returned.
+	Only messages for which block evaluates to true will be returned.
+	If necessary (when we haven't written anything for a while and keepalive is needed) do a ping.
 	Might fail with ConnectionTimedOut."
 
-	| packet started |
 	self pingIfNeeded.
-	started := Time millisecondClockValue.
-	[
-		(self readFromInboxSuchThat: block) 
-			ifNotNil: [ :found | ^ found ].
-		packet := self readPacketWithQoSFlow.
-		(block value: packet)
-			ifTrue: [ ^ packet ]
-			ifFalse: [ inbox add: packet ].
-		(Time millisecondsSince: started) / 1000 > self timeout
-			ifTrue: [ ^ self failedToReadInTimeout ] ] repeat
+	^ self readNoPingSuchThat: block
 ]
 
 { #category : #public }
