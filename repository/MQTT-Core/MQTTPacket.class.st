@@ -123,6 +123,11 @@ MQTTPacket >> hash [
 	^ self class hash
 ]
 
+{ #category : #testing }
+MQTTPacket >> isApplicationMessage [
+	^ false
+]
+
 { #category : #accessing }
 MQTTPacket >> payloadLength [
 	^ 0
