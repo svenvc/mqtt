@@ -24,8 +24,21 @@ Class {
 		'useTLS',
 		'debug'
 	],
+	#classInstVars : [
+		'Debug'
+	],
 	#category : #'MQTT-Client'
 }
+
+{ #category : #accessing }
+MQTTAbstractClient class >> debug [
+	^ Debug ifNil: [ Debug := false ]
+]
+
+{ #category : #accessing }
+MQTTAbstractClient class >> debug: anObject [
+	Debug := anObject
+]
 
 { #category : #accessing }
 MQTTAbstractClient class >> url: stringOrUrl [
@@ -71,7 +84,7 @@ MQTTAbstractClient >> clientId: string [
 
 { #category : #accessing }
 MQTTAbstractClient >> debug [
-	^ debug ifNil: [ debug := true ]
+	^ debug ifNil: [ debug := self class debug ]
 ]
 
 { #category : #'initialize-release' }
